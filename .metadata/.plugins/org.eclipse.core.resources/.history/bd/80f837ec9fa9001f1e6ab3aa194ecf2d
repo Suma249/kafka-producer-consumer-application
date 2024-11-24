@@ -1,0 +1,5 @@
+package com.learning.kafka.dto;
+
+public class CustomerDto {
+
+}

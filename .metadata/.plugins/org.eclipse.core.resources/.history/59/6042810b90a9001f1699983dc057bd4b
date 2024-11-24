@@ -1,0 +1,17 @@
+package com.learning.kafka.service;
+
+import org.slf4j.LoggerFactory;
+import org.springframework.kafka.annotation.KafkaListener;
+import org.springframework.stereotype.Service;
+
+import ch.qos.logback.classic.Logger;
+
+@Service
+public class KafkaMessageListener {
+	Logger logger=(Logger) LoggerFactory.getLogger(KafkaMessageListener.class);
+	
+	@KafkaListener(topics="learning-kafka-topic1")
+	public void Consume(String message) {
+		logger.info("consumer consumed the message: "+message);
+	}
+}

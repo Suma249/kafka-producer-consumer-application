@@ -1,0 +1,3 @@
+spring.application.name=kafka-producer-example
+spring.kafka.producer.bootstrap-servers=localhost:9092
+spring.kafka.admin.properties.request.timeout.ms=30000

@@ -1,0 +1,42 @@
+package com.learning.kafka.service;
+
+import java.util.concurrent.CompletableFuture;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.kafka.core.KafkaTemplate;
+import org.springframework.kafka.support.SendResult;
+import org.springframework.stereotype.Service;
+
+import com.learning.kafka.dto.CustomerDto;
+
+@Service
+public class KafkaMessagePublisher {
+	
+	@Autowired
+	private KafkaTemplate<String, Object> template;
+	
+	public void sendMessageToTopic(String message) {
+		CompletableFuture<SendResult<String, Object>> future=template.send("learning-kafka-topic1",message);
+		//to block sending thread and get he resukt about the send messages, we can do futre.get than it will wait for the reskts
+		future.whenComplete((result,ex)->{
+			if(ex==null)
+				System.out.println("sent message=["+message+"] with offset=["+result.getRecordMetadata().offset()+"]");
+			else
+				System.out.println("unable to send message["+message+"] dure to"+ex.getMessage());
+		});
+		
+	}
+	
+	public void sendEventsToTopic(CustomerDto customer) {
+		
+		CompletableFuture<SendResult<String, Object>> future=template.send("learning-kafka-topic2",customer);
+		//to block sending thread and get he resukt about the send messages, we can do futre.get than it will wait for the reskts
+		future.whenComplete((result,ex)->{
+			if(ex==null)
+				System.out.println("sent message=["+customer.toString()+"] with offset=["+result.getRecordMetadata().offset()+"]");
+			else
+				System.out.println("unable to send message["+customer.toString()+"] dure to"+ex.getMessage());
+		});
+		
+	}
+}

@@ -1,0 +1,32 @@
+package com.learning.kafka.service;
+
+import org.slf4j.LoggerFactory;
+import org.springframework.kafka.annotation.KafkaListener;
+import org.springframework.stereotype.Service;
+
+import ch.qos.logback.classic.Logger;
+
+@Service
+public class KafkaMessageListener {
+	Logger logger=(Logger) LoggerFactory.getLogger(KafkaMessageListener.class);
+	
+	@KafkaListener(topics="learning-kafka-topic2", groupId="consumer-group1")
+	public void Consume1(String message) {
+		logger.info("consumer1 consumed the message: "+message);
+	}
+	
+/*	@KafkaListener(topics="learning-kafka-topic1", groupId="consumer-group1")
+	public void Consume2(String message) {
+		logger.info("consumer2 consumed the message: "+message);
+	}
+	
+	@KafkaListener(topics="learning-kafka-topic1", groupId="consumer-group1")
+	public void Consume3(String message) {
+		logger.info("consumer3 consumed the message: "+message);
+	}
+	
+	@KafkaListener(topics="learning-kafka-topic1", groupId="consumer-group1")
+	public void Consume4(String message) {
+		logger.info("consumer4 consumed the message: "+message);
+	} */
+}
